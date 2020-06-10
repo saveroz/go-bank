@@ -7,12 +7,13 @@ import (
 	"encoding/json"
 )
 
+//Article is ..
 type Article struct {
 	Title string `json:"Title"`
 	Desc string `json:"Desc"`
 	Content string `json:"Content"`
 }
-
+//Articles is ...
 type Articles []Article
 
 func allArticles(w http.ResponseWriter, r *http.Request)  {
@@ -38,5 +39,5 @@ func handleRequest() {
 }
 
 func main() {
-	handleRequest()
+	handleRequest();
 }
