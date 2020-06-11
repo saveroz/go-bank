@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"fmt"
@@ -36,8 +36,4 @@ func handleRequest() {
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/articles", allArticles)
 	log.Fatal(http.ListenAndServe(":3000", nil))
-}
-
-func main() {
-	handleRequest();
 }
