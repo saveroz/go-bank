@@ -1,1 +1,1 @@
-# go-webserver-practice
+# go-bank

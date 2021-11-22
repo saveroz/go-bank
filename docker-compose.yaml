@@ -1,0 +1,34 @@
+# Reason why stick to V2 not V3
+# https://github.com/peter-evans/docker-compose-healthcheck/issues/3#issuecomment-329037485
+version: "2.3"
+networks:
+  development:
+    driver: bridge
+services:
+  postgres:
+    image: postgres:12.5-alpine
+    container_name: bank-postgres
+    ports:
+      - 54320:5432
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bank
+    networks:
+      - development
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d bank"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  migrate:
+    image: migrate/migrate
+    networks:
+      - development
+    volumes:
+      - $PWD/internal/postgres/migrations:/migrations
+    command:
+      ["-path", "/migrations", "-database",  "postgres://user:password@postgres:5432/bank?sslmode=disable", "up", "3"]
+    depends_on:
+      postgres:
+        condition: service_healthy
