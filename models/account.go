@@ -13,9 +13,13 @@ type Account struct {
 	Updated time.Time `json:"updated"`
 }
 
-
 type AccountFetchParam struct {
 	ID        string `json:"id"`
 	Name      string `json:"name"`
-	AccountNo string `json:"account_no`
+	AccountNo int `json:"account_no`
+}
+
+type AccountUpdateParams struct {
+	AccountNo int `json:"account_no`
+	Balance   int `json:"balance"`
 }

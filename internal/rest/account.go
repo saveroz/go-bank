@@ -3,6 +3,7 @@ package rest
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	echo "github.com/labstack/echo/v4"
@@ -31,6 +32,7 @@ func (ah accountHandler) Create(e echo.Context) error {
 
 	err := ah.service.Create(e.Request().Context(), &account)
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	return e.JSON(http.StatusCreated, &account)

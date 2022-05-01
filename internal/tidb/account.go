@@ -1,4 +1,4 @@
-package postgres
+package tidb
 
 import (
 	"context"
@@ -40,7 +40,7 @@ func (ar AccountRepository) Create(ctx context.Context, ac *models.Account) erro
 
 	fmt.Println(ac.ID)
 
-	sqlStatement := `INSERT INTO account (id, name, balance, account_no, created, updated) VALUES ($1, $2, $3, $4, $5, $6)`
+	sqlStatement := `INSERT INTO account (id, name, balance, account_no, created, updated) VALUES (?, ?, ?, ?, ?, ?)`
 	result, err := ar.db.ExecContext(
 		ctx,
 		sqlStatement,
@@ -72,7 +72,7 @@ func (ar AccountRepository) GetByAccountNo(ctx context.Context, accountNo int) (
 	var account models.Account
 
 	// add for update to lock the account row
-	sqlStatement := `SELECT id, name, balance, account_no, created, updated FROM account WHERE account_no=$1 FOR UPDATE`
+	sqlStatement := `SELECT id, name, balance, account_no, created, updated FROM account WHERE account_no=$1`
 
 	tx, err := sql_transaction.GetTxFromContext(ctx)
 	fmt.Println("found value:", tx)
